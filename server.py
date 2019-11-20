@@ -1,7 +1,7 @@
 import time
 from datetime import datetime
 from flask import Flask, request
-import pickle
+
 
 app = Flask(__name__)
 messages = [
@@ -21,9 +21,7 @@ password_storage = {
 def hello_method():
     return "Hello, World! 123"
 
-@app.route('/members')
-def members_method():
-    pass
+
 
 @app.route("/status")
 def status_method():
@@ -49,8 +47,7 @@ def send_method():
     # first attempt for password is always valid
     if username not in password_storage:
         password_storage[username] = password
-       # f=open("users","WB")
-       # pickle.dump(members)
+
 
     # validate data
     if not isinstance(username, str) or len(username) == 0:
@@ -59,6 +56,11 @@ def send_method():
         return {'ok': False}
     if password_storage[username] != password:
         return {'ok': False}
+
+    if startswith(upper(text),'/frown'):
+        temp=text[6:]
+        text=username+' неодобрительно качает головой, в знак недовольства высказываниями '+temp
+
 
     messages.append({'username': username, 'time': time.time(), 'text': text})
 
